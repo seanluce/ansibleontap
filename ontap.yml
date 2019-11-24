@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  name: Volume Action
+  vars:
+    hostname: 192.168.161.100
+    username: admin
+    password: Trace31234!
+    vserver: vserver1
+    aggr: aggr1
+    vol_name: ansibleVol
+  tasks:
+  - name: License Add
+    na_ontap_license:
+      state: present
+      license_codes: YVUCRRRRYVHXCFABGAAAAAAAAAAA
+      hostname: "{{ hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      https: true
+      validate_certs: false
