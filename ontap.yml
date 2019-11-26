@@ -37,7 +37,7 @@
       https: true
       validate_certs: false
       state: present
-      node_name: test
+      node_name: ontapsn01-01
       to_addresses: sean.luce@trace3.com
       transport: https
       noteto: abc@def.com,def@ghi.com
