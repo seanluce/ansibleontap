@@ -8,22 +8,38 @@
   tasks:
   - name: License Add
     na_ontap_license:
-      state: present
-      license_codes: YVUCRRRRYVHXCFABGAAAAAAAAAAA,WKQGSRRRYVHXCFABGAAAAAAAAAAA,SOHOURRRYVHXCFABGAAAAAAAAAAA,YBSOYRRRYVHXCFABGAAAAAAAAAAA,KQSRRRRRYVHXCFABGAAAAAAAAAAA,MBXNQRRRYVHXCFABGAAAAAAAAAAA,QDDSVRRRYVHXCFABGAAAAAAAAAAA,CYAHWRRRYVHXCFABGAAAAAAAAAAA,GUJZTRRRYVHXCFABGAAAAAAAAAAA,OSYVWRRRYVHXCFABGAAAAAAAAAAA,UZLKTRRRYVHXCFABGAAAAAAAAAAA,EJFDVRRRYVHXCFABGAAAAAAAAAAA
       hostname: "{{ netapp_hostname }}"
       username: "{{ netapp_username }}"
       password: "{{ netapp_password }}"
       https: true
       validate_certs: false
-  - name: create SVM
-    na_ontap_svm:
       state: present
-      name: ansibleVServer
+      license_codes: YVUCRRRRYVHXCFABGAAAAAAAAAAA,WKQGSRRRYVHXCFABGAAAAAAAAAAA,SOHOURRRYVHXCFABGAAAAAAAAAAA,YBSOYRRRYVHXCFABGAAAAAAAAAAA,KQSRRRRRYVHXCFABGAAAAAAAAAAA,MBXNQRRRYVHXCFABGAAAAAAAAAAA,QDDSVRRRYVHXCFABGAAAAAAAAAAA,CYAHWRRRYVHXCFABGAAAAAAAAAAA,GUJZTRRRYVHXCFABGAAAAAAAAAAA,OSYVWRRRYVHXCFABGAAAAAAAAAAA,UZLKTRRRYVHXCFABGAAAAAAAAAAA,EJFDVRRRYVHXCFABGAAAAAAAAAAA
+  - name: Create CIFS SVM
+    na_ontap_svm:
+      hostname: "{{ netapp_hostname }}"
+      username: "{{ netapp_username }}"
+      password: "{{ netapp_password }}"
+      https: true
+      validate_certs: false
+      state: present
+      name: myCIFSsvm
+      allowed_protocols: cifs,ndmp
+      language: en_us
       root_volume: vol1
       root_volume_aggregate: data1
       root_volume_security_style: unix
+  - name: Enable ASUP
+    na_ontap_autosupport:
       hostname: "{{ netapp_hostname }}"
       username: "{{ netapp_username }}"
       password: "{{ netapp_password }}"
       https: true
       validate_certs: false
+      state: present
+      node_name: test
+      to_address: sean.luce@trace3.com
+      transport: https
+      noteto: abc@def.com,def@ghi.com
+      mail_hosts: 1.2.3.4
+      support: true
