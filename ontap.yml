@@ -38,7 +38,7 @@
       validate_certs: false
       state: present
       node_name: test
-      to_address: sean.luce@trace3.com
+      to_addresses: sean.luce@trace3.com
       transport: https
       noteto: abc@def.com,def@ghi.com
       mail_hosts: 1.2.3.4
