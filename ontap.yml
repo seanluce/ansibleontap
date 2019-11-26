@@ -1,20 +1,29 @@
 ---
 - hosts: localhost
-  name: Volume Action
+  name: ONTAP Simulator Build
   vars:
-    hostname: 192.168.161.100
-    username: admin
-    password: Trace31234!
-    vserver: vserver1
-    aggr: aggr1
-    vol_name: ansibleVol
+    netapp_hostname: 192.168.161.100
+    netapp_username: admin
+    netapp_password: Trace31234!
   tasks:
   - name: License Add
     na_ontap_license:
       state: present
       license_codes: YVUCRRRRYVHXCFABGAAAAAAAAAAA,WKQGSRRRYVHXCFABGAAAAAAAAAAA,SOHOURRRYVHXCFABGAAAAAAAAAAA,YBSOYRRRYVHXCFABGAAAAAAAAAAA,KQSRRRRRYVHXCFABGAAAAAAAAAAA,MBXNQRRRYVHXCFABGAAAAAAAAAAA,QDDSVRRRYVHXCFABGAAAAAAAAAAA,CYAHWRRRYVHXCFABGAAAAAAAAAAA,GUJZTRRRYVHXCFABGAAAAAAAAAAA,OSYVWRRRYVHXCFABGAAAAAAAAAAA,UZLKTRRRYVHXCFABGAAAAAAAAAAA,EJFDVRRRYVHXCFABGAAAAAAAAAAA
-      hostname: "{{ hostname }}"
-      username: "{{ username }}"
-      password: "{{ password }}"
+      hostname: "{{ netapp_hostname }}"
+      username: "{{ netapp_username }}"
+      password: "{{ netapp_password }}"
+      https: true
+      validate_certs: false
+  - name: create SVM
+    na_ontap_svm:
+      state: present
+      name: ansibleVServer
+      root_volume: vol1
+      root_volume_aggregate: data1
+      root_volume_security_style: unix
+      hostname: "{{ netapp_hostname }}"
+      username: "{{ netapp_username }}"
+      password: "{{ netapp_password }}"
       https: true
       validate_certs: false
